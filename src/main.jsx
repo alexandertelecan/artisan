@@ -5,8 +5,8 @@ import "./index.css";
 import theme from "../theme/theme.js";
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "./layouts/Layout.jsx";
-import "@fontsource/archivo-narrow";
-import "@fontsource/yantramanav";
+import "@fontsource/albert-sans";
+import "@fontsource/barlow";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>

@@ -17,7 +17,7 @@ export default function Setup() {
         postCode: values.postCode.trim(),
       },
     };
-    setData({ company: companyData });
+    setData({ ...data, company: companyData });
     setStep(2);
   };
 

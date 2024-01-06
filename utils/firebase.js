@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  sendEmailVerification,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import { getFirestore, addDoc, collection, getDocs } from "firebase/firestore";
 
@@ -62,4 +62,14 @@ const createEmailAndPassUser = async (email, password) => {
     console.log(error);
   }
 };
-export { addDocument, getDocuments, createEmailAndPassUser };
+
+const resetPassword = async (email) => {
+  try {
+    const response = await sendPasswordResetEmail(auth, email);
+    console.log(response);
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export { addDocument, getDocuments, createEmailAndPassUser, resetPassword };

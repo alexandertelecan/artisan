@@ -1,10 +1,12 @@
-import { Box, Heading, Text, Flex, Button, Link } from "@chakra-ui/react";
-import TextInput from "./components/form/TextInput";
-
+import { Box, Heading, Text, Flex, Button, Alert } from "@chakra-ui/react";
+import TextInput from "../form/TextInput";
+import React from "react";
+import { AlertIcon } from "@chakra-ui/alert";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import regex from "../utils/regex";
+import regex from "../../../utils/regex";
+import { resetPassword } from "../../../utils/firebase";
 const loginSchema = yup
   .object({
     email: yup
@@ -17,28 +19,29 @@ const loginSchema = yup
       .typeError(
         "Vă rugăm să introduceți o adresă de email validă. Formatul corect este nume@domeniu.com"
       ),
-    password: yup
-      .string()
-      .matches(
-        regex.password,
-        "Parola trebuie să aibă minim 8 caractere, inclusiv cel puțin o literă mare și un număr."
-      )
-      .typeError(
-        "Parola trebuie să aibă minim 8 caractere, inclusiv cel puțin o literă mare și un număr."
-      ),
   })
   .required();
 
-function Login() {
+function ResetPasswordForm({ navStep }) {
+  const [showAlert, setShowAlert] = React.useState(false);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isDirty },
   } = useForm({
     resolver: yupResolver(loginSchema),
     mode: "onBlur",
   });
-  console.log("Errors are: ", errors);
+
+  const onSubmit = async (data) => {
+    try {
+      await resetPassword(data.email.trim());
+      setShowAlert(true);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Flex
       w="calc(100vw - 32px)"
@@ -51,7 +54,7 @@ function Login() {
         <Text color="gray" marginBottom="32px">
           Introdu emailul tău pentru a primi un link de resetare a parolei.
         </Text>
-        <form onSubmit={handleSubmit((data) => console.log(data))} noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <TextInput
             label="Email"
             type="email"
@@ -61,22 +64,36 @@ function Login() {
             helperText="Introduceți adresa de email asociată contului dvs. (ex: nume@domeniu.com)"
             elementProps={{ marginBottom: "24px" }}
           />
-          <Button type="submit" colorScheme="primary" w="100%">
+          {showAlert && (
+            <Alert status="success" variant="subtle" my="24px">
+              <AlertIcon />
+              Emailul a fost trimis cu succes! Te rugăm să urmezi pașii din
+              email pentru a-ți reseta parola.
+            </Alert>
+          )}
+
+          <Button
+            type="submit"
+            colorScheme="primary"
+            w="100%"
+            isDisabled={!isValid || !isDirty}
+          >
             Resetează parola
           </Button>
-          <Box>
-            <Text
-              color="primary.600"
-              cursor="pointer"
-              _hover={{ textDecoration: "underline" }}
-            >
-              Autentificare
-            </Text>
-          </Box>
+
+          <Text
+            color="primary.600"
+            cursor="pointer"
+            _hover={{ textDecoration: "underline" }}
+            onClick={() => navStep(1)}
+            textAlign="center"
+          >
+            Autentificare
+          </Text>
         </form>
       </Box>
     </Flex>
   );
 }
 
-export default Login;
+export default ResetPasswordForm;

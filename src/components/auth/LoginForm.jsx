@@ -29,16 +29,16 @@ const loginSchema = yup
   })
   .required();
 
-function LoginForm() {
+function LoginForm({ navStep }) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid, isDirty },
   } = useForm({
     resolver: yupResolver(loginSchema),
     mode: "onBlur",
   });
-  console.log("Errors are: ", errors);
+
   return (
     <Flex
       w="calc(100vw - 32px)"
@@ -68,18 +68,24 @@ function LoginForm() {
             name="password"
             register={register}
           />
-          <Button type="submit" colorScheme="primary" w="100%">
+          <Button
+            type="submit"
+            colorScheme="primary"
+            w="100%"
+            isDisabled={!isValid || !isDirty}
+          >
             Submit
           </Button>
-          <Box>
-            <Text
-              color="primary.600"
-              cursor="pointer"
-              _hover={{ textDecoration: "underline" }}
-            >
-              Resetează parola
-            </Text>
-          </Box>
+
+          <Text
+            textAlign="center"
+            color="primary.600"
+            cursor="pointer"
+            _hover={{ textDecoration: "underline" }}
+            onClick={() => navStep(2)}
+          >
+            Resetează parola
+          </Text>
         </form>
       </Box>
     </Flex>

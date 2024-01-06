@@ -1,7 +1,7 @@
-import Login from "./Login";
+import Auth from "./Auth";
 import Setup from "./Setup";
 function App() {
-  return <Setup />;
+  return <Auth />;
 }
 
 export default App;

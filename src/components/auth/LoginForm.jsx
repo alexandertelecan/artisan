@@ -1,10 +1,10 @@
 import { Box, Heading, Text, Flex, Button } from "@chakra-ui/react";
-import TextInput from "./components/form/TextInput";
+import TextInput from "../form/TextInput";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import regex from "../utils/regex";
+import regex from "../../../utils/regex";
 const loginSchema = yup
   .object({
     email: yup
@@ -29,7 +29,7 @@ const loginSchema = yup
   })
   .required();
 
-function Login() {
+function LoginForm() {
   const {
     register,
     handleSubmit,
@@ -71,10 +71,19 @@ function Login() {
           <Button type="submit" colorScheme="primary" w="100%">
             Submit
           </Button>
+          <Box>
+            <Text
+              color="primary.600"
+              cursor="pointer"
+              _hover={{ textDecoration: "underline" }}
+            >
+              Resetează parola
+            </Text>
+          </Box>
         </form>
       </Box>
     </Flex>
   );
 }
 
-export default Login;
+export default LoginForm;

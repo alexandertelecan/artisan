@@ -3,9 +3,27 @@ import { Box, Heading, Text, Flex, Progress } from "@chakra-ui/react";
 import CompanySetup from "./components/setup/CompanySetup";
 import AdministratorSetup from "./components/setup/AdministratorSetup";
 import CompletedSetup from "./components/setup/CompletedSetup";
+
+import {
+  addDocument,
+  getDocuments,
+  createEmailAndPassUser,
+} from "../utils/firebase";
+
 export default function Setup() {
   const [data, setData] = React.useState({});
   const [step, setStep] = React.useState(1);
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await getDocuments("company");
+      if (response.length > 0) {
+        setStep(3); //exista deja o companie, ruteaza la pagina principala /
+      }
+    };
+    fetchData();
+  });
+
   const onCompanySubmit = (values) => {
     const companyData = {
       companyName: values.companyName.trim(),
@@ -21,16 +39,29 @@ export default function Setup() {
     setStep(2);
   };
 
-  const onAdminSubmit = (values) => {
+  const onAdminSubmit = async (values) => {
     const adminData = {
       firstName: values.firstName.trim(),
       lastName: values.lastName.trim(),
       email: values.email.trim(),
-      password: values.password.trim(),
-      confirmPassword: values.confirmPassword.trim(),
     };
-    setData({ ...data, admin: adminData });
-    setStep(3);
+    const authData = {
+      email: values.email.trim(),
+      password: values.password.trim(),
+    };
+
+    const document = {
+      ...data,
+      admin: adminData,
+    };
+    const authResponse = await createEmailAndPassUser(
+      authData.email,
+      authData.password
+    );
+    const response = await addDocument("company", document);
+    if (response && authResponse) {
+      setStep(3);
+    }
   };
 
   const returnToStep = (step) => {

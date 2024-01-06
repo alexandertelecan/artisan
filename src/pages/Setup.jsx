@@ -1,14 +1,14 @@
 import React from "react";
 import { Box, Heading, Text, Flex, Progress } from "@chakra-ui/react";
-import CompanySetup from "./components/setup/CompanySetup";
-import AdministratorSetup from "./components/setup/AdministratorSetup";
-import CompletedSetup from "./components/setup/CompletedSetup";
+import CompanySetup from "../components/setup/CompanySetup";
+import AdministratorSetup from "../components/setup/AdministratorSetup";
+import CompletedSetup from "../components/setup/CompletedSetup";
 
 import {
   addDocument,
   getDocuments,
   createEmailAndPassUser,
-} from "../utils/firebase";
+} from "../../utils/firebase";
 
 export default function Setup() {
   const [data, setData] = React.useState({});

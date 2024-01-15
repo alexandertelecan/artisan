@@ -84,7 +84,11 @@ export default function AdministratorSetup({
             alignItems="space-between"
             justifyContent="space-between"
           >
-            <Flex gap={5}>
+            <Flex
+              gap={5}
+              flexDirection={{ base: "column", md: "row" }}
+              width="100%"
+            >
               <TextInput
                 label="Numele de Familie"
                 name="lastName"
@@ -111,7 +115,7 @@ export default function AdministratorSetup({
             helperText="Introdu adresa de email a administratorului."
             elementProps={{ marginBottom: "24px" }}
           />
-          <Flex gap={5}>
+          <Flex gap={5} flexDirection={{ base: "column", md: "row" }}>
             <TextInput
               label="Parola"
               name="password"

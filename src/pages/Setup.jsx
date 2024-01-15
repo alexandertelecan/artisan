@@ -18,7 +18,7 @@ export default function Setup() {
     const fetchData = async () => {
       const response = await getDocuments("company");
       if (response.length > 0) {
-        setStep(3); //exista deja o companie, ruteaza la pagina principala /
+        setStep(3); //Exista deja o companie, ruteaza la pagina principala /
       }
     };
     fetchData();
@@ -72,8 +72,14 @@ export default function Setup() {
 
   return (
     <Flex
-      w="calc(100vw - 32px)"
-      h="calc(100vh - 32px)"
+      w={{ base: "auto", md: "calc(100vw - 32px)" }}
+      h={
+        step === 3
+          ? { base: "100vh" }
+          : { base: "auto", md: "calc(100vh - 32px)" }
+      }
+      //Ternary operator which determines which step the user is currently at. If it's the last step then the height of the parent container is 100vh so the smaller child element can be centered in the page.
+
       alignItems="center"
       justifyContent="center"
     >

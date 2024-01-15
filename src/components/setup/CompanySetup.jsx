@@ -85,7 +85,11 @@ export default function CompanySetup({ data, onCompanySubmit }) {
             alignItems="space-between"
             justifyContent="space-between"
           >
-            <Flex gap={5}>
+            <Flex
+              gap={5}
+              flexDirection={{ base: "column", md: "row" }}
+              width="100%"
+            >
               <TextInput
                 label="Nume Companie"
                 name="companyName"
@@ -108,7 +112,7 @@ export default function CompanySetup({ data, onCompanySubmit }) {
             <Heading size="xs" color="primary.600" marginBottom="8px">
               Adresa Companiei
             </Heading>
-            <Flex gap={5}>
+            <Flex gap={5} flexDirection={{ base: "column", md: "row" }}>
               <TextInput
                 label="Strada"
                 name="street"
@@ -126,7 +130,7 @@ export default function CompanySetup({ data, onCompanySubmit }) {
                 elementProps={{ marginBottom: "24px" }}
               />
             </Flex>
-            <Flex gap={5}>
+            <Flex gap={5} flexDirection={{ base: "column", md: "row" }}>
               <TextInput
                 label="Orașul"
                 name="city"
@@ -150,7 +154,7 @@ export default function CompanySetup({ data, onCompanySubmit }) {
             type="submit"
             display="block"
             marginTop="24px"
-            marginLeft="auto"
+            marginLeft={{ md: "auto" }}
             isDisabled={!isValid}
           >
             Continuă

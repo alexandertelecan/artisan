@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Heading, Text, Button } from "@chakra-ui/react";
+import { Box, Heading, Text, Button, Flex } from "@chakra-ui/react";
 export default function CompletedSetup() {
   return (
     <Box>

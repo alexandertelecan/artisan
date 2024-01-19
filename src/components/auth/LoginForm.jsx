@@ -46,7 +46,12 @@ function LoginForm({ navStep }) {
       alignItems="center"
       justifyContent="center"
     >
-      <Box maxWidth="450px">
+      <Box
+        maxWidth="450px"
+        border="1px solid lightgrey"
+        borderRadius="8px"
+        padding="16px"
+      >
         <Heading>Autentificare</Heading>
         <Text color="gray" marginBottom="32px">
           Autentificați-vă pentru accesul în contul organizației.

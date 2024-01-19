@@ -1,5 +1,10 @@
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import React from "react";
 
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return (
+    <Flex justifyContent={"center"} alignItems={"center"}>
+      <Heading>DASHBOARD</Heading>
+    </Flex>
+  );
 }

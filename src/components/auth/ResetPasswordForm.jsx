@@ -49,7 +49,12 @@ function ResetPasswordForm({ navStep }) {
       alignItems="center"
       justifyContent="center"
     >
-      <Box maxWidth="450px">
+      <Box
+        maxWidth="450px"
+        border="1px solid lightgrey"
+        borderRadius="8px"
+        padding="16px"
+      >
         <Heading>Resetare Parolă</Heading>
         <Text color="gray" marginBottom="32px">
           Introdu emailul tău pentru a primi un link de resetare a parolei.

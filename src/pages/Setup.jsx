@@ -4,11 +4,11 @@ import CompanySetup from "../components/setup/CompanySetup";
 import AdministratorSetup from "../components/setup/AdministratorSetup";
 import CompletedSetup from "../components/setup/CompletedSetup";
 
-import {
-  addDocument,
-  getDocuments,
-  createEmailAndPassUser,
-} from "../../utils/firebase";
+// import {
+//   addDocument,
+//   getDocuments,
+//   createEmailAndPassUser,
+// } from "../../utils/firebase";
 
 export default function Setup() {
   const [data, setData] = React.useState({});
@@ -78,8 +78,6 @@ export default function Setup() {
           ? { base: "100vh" }
           : { base: "auto", md: "calc(100vh - 32px)" }
       }
-      //Ternary operator which determines which step the user is currently at. If it's the last step then the height of the parent container is 100vh so the smaller child element can be centered in the page.
-
       alignItems="center"
       justifyContent="center"
     >

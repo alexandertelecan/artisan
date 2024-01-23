@@ -4,11 +4,11 @@ import CompanySetup from "../components/setup/CompanySetup";
 import AdministratorSetup from "../components/setup/AdministratorSetup";
 import CompletedSetup from "../components/setup/CompletedSetup";
 
-// import {
-//   addDocument,
-//   getDocuments,
-//   createEmailAndPassUser,
-// } from "../../utils/firebase";
+import {
+  addDocument,
+  getDocuments,
+  createEmailAndPassUser,
+} from "../../utils/firebase";
 
 export default function Setup() {
   const [data, setData] = React.useState({});
@@ -45,6 +45,7 @@ export default function Setup() {
       lastName: values.lastName.trim(),
       email: values.email.trim(),
     };
+
     const authData = {
       email: values.email.trim(),
       password: values.password.trim(),
@@ -54,10 +55,12 @@ export default function Setup() {
       ...data,
       admin: adminData,
     };
+
     const authResponse = await createEmailAndPassUser(
       authData.email,
       authData.password
     );
+
     const response = await addDocument("company", document);
     if (response && authResponse) {
       setStep(3);

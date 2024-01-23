@@ -1,5 +1,6 @@
 import React from "react";
-import { Box, Heading, Text, Button, Flex } from "@chakra-ui/react";
+import { Box, Heading, Text, Button } from "@chakra-ui/react";
+import { NavLink } from "react-router-dom";
 export default function CompletedSetup() {
   return (
     <Box>
@@ -19,7 +20,7 @@ export default function CompletedSetup() {
         Îți dorim succes în utilizarea aplicației noastre!
       </Text>
       <Button colorScheme="green" mt="24px">
-        Continuă
+        <NavLink to={"/dashboard"}>Continuă</NavLink>
       </Button>
     </Box>
   );

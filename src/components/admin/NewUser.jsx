@@ -1,10 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Box, Heading, Flex, Button } from "@chakra-ui/react";
+import { Box, Heading, Flex, Button, useToast } from "@chakra-ui/react";
 import TextInput from "../form/TextInput";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import regex from "../../../utils/regex";
+import { addDocument, createEmailAndPassUser } from "../../../utils/firebase";
 
 const newUserSchema = yup
   .object({
@@ -48,10 +49,13 @@ const newUserSchema = yup
   })
   .required();
 
-export default function NewUser({ data, onUserSubmit }) {
+export default function NewUser() {
+  const [data, setData] = React.useState({});
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isValid, isDirty },
   } = useForm({
     resolver: yupResolver(newUserSchema),
@@ -64,6 +68,47 @@ export default function NewUser({ data, onUserSubmit }) {
     },
     mode: "onBlur",
   });
+
+  const onUserSubmit = async (values) => {
+    const userData = {
+      firstName: values.firstName.trim(),
+      lastName: values.lastName.trim(),
+      email: values.email.trim(),
+    };
+
+    const authData = {
+      email: values.email.trim(),
+      password: values.password.trim(),
+    };
+
+    const document = {
+      ...data,
+      user: userData,
+    };
+
+    const authResponse = await createEmailAndPassUser(
+      authData.email,
+      authData.password
+    );
+
+    const response = await addDocument("users", document);
+    if (response && authResponse) {
+    }
+
+    reset();
+  };
+
+  const toast = useToast();
+  const showToast = () => {
+    toast({
+      title: "Utilizator adaugat",
+      description: "Ati adaugat utilizatorul cu succes!",
+      duration: 5000,
+      isClosable: true,
+      status: "success",
+      position: "top",
+    });
+  };
 
   return (
     <Box height={"100%"}>
@@ -133,7 +178,8 @@ export default function NewUser({ data, onUserSubmit }) {
               colorScheme="primary"
               type="submit"
               display="block"
-              isDisabled={!isValid || !isDirty}
+              // isDisabled={!isValid || !isDirty}
+              onClick={showToast}
             >
               Confirmă
             </Button>

@@ -6,7 +6,15 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
 } from "firebase/auth";
-import { getFirestore, addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+  onSnapshot,
+} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -50,6 +58,34 @@ const getDocuments = async (collectionName) => {
   }
 };
 
+const getDocumentsWithId = async (collectionName) => {
+  try {
+    const querySnapshot = await getDocs(collection(db, collectionName));
+    const data = [];
+    querySnapshot.docs.forEach((doc) => {
+      data.push({ ...doc.data(), id: doc.id });
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getDocumentsInRealTime = async (collectionName) => {
+  try {
+    const data = [];
+    await onSnapshot(collection(db, collectionName), (snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        data.push({ ...doc.data(), id: doc.id });
+      });
+    });
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const createEmailAndPassUser = async (email, password) => {
   try {
     const userCredential = await createUserWithEmailAndPassword(
@@ -72,4 +108,24 @@ const resetPassword = async (email) => {
     console.log(error);
   }
 };
-export { addDocument, getDocuments, createEmailAndPassUser, resetPassword };
+
+const deleteUser = async (document, key) => {
+  try {
+    const docRef = doc(db, document, key);
+    await deleteDoc(docRef);
+    console.log(docRef);
+    // return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  addDocument,
+  getDocuments,
+  createEmailAndPassUser,
+  resetPassword,
+  getDocumentsWithId,
+  deleteUser,
+  getDocumentsInRealTime,
+};

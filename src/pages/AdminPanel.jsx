@@ -14,34 +14,6 @@ import NewUser from "../components/admin/NewUser";
 import ExistingUsers from "../components/admin/ExistingUsers";
 
 export default function AdminPanel() {
-  const [data, setData] = React.useState({});
-
-  const onUserSubmit = async (values) => {
-    const userData = {
-      firstName: values.firstName.trim(),
-      lastName: values.lastName.trim(),
-      email: values.email.trim(),
-    };
-    const authData = {
-      email: values.email.trim(),
-      password: values.password.trim(),
-    };
-
-    const document = {
-      ...data,
-      user: userData,
-    };
-    const authResponse = await createEmailAndPassUser(
-      authData.email,
-      authData.password
-    );
-    const response = await addDocument("user", document);
-
-    // if (response && authResponse) {
-    //   setStep(3);
-    // }
-  };
-
   return (
     <Flex
       w={{ base: "auto", md: "calc(100dvw - 32px)" }}
@@ -69,7 +41,7 @@ export default function AdminPanel() {
                   <ExistingUsers />
                 </TabPanel>
                 <TabPanel>
-                  <NewUser data={data} onUserSubmit={onUserSubmit} />
+                  <NewUser />
                 </TabPanel>
               </TabPanels>
             </Tabs>

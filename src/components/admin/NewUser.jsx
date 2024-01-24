@@ -52,23 +52,6 @@ const newUserSchema = yup
 export default function NewUser() {
   const [data, setData] = React.useState({});
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isValid, isDirty },
-  } = useForm({
-    resolver: yupResolver(newUserSchema),
-    defaultValues: {
-      firstName: data?.user?.firstName,
-      lastName: data?.user?.lastName,
-      email: data?.user?.email,
-      password: data?.user?.password,
-      confirmPassword: data?.user?.confirmPassword,
-    },
-    mode: "onBlur",
-  });
-
   const onUserSubmit = async (values) => {
     const userData = {
       firstName: values.firstName.trim(),
@@ -93,10 +76,27 @@ export default function NewUser() {
 
     const response = await addDocument("users", document);
     if (response && authResponse) {
+      showToast();
+      reset();
     }
-
-    reset();
   };
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isValid, isDirty },
+  } = useForm({
+    resolver: yupResolver(newUserSchema),
+    defaultValues: {
+      firstName: data?.user?.firstName,
+      lastName: data?.user?.lastName,
+      email: data?.user?.email,
+      password: data?.user?.password,
+      confirmPassword: data?.user?.confirmPassword,
+    },
+    mode: "onBlur",
+  });
 
   const toast = useToast();
   const showToast = () => {
@@ -179,7 +179,7 @@ export default function NewUser() {
               type="submit"
               display="block"
               // isDisabled={!isValid || !isDirty}
-              onClick={showToast}
+              // onClick={}
             >
               Confirmă
             </Button>

@@ -15,66 +15,27 @@ import {
   Text,
 } from "@chakra-ui/react";
 import MainModal from "../common/MainModal";
+import {
+  getDocumentsWithId,
+  deleteUser,
+  getDocumentsInRealTime,
+} from "../../../utils/firebase";
 
 export default function ExistingUsers() {
-  const [users, setUsers] = useState([
-    {
-      firstName: "Mihai",
-      lastName: "Ciolan",
-      email: "mihaiciolan@bing.com",
-    },
-    {
-      firstName: "Ana",
-      lastName: "Popescu",
-      email: "anapopescu@gmail.com",
-    },
-    {
-      firstName: "Radu",
-      lastName: "Ionescu",
-      email: "radu.ionescu@yahoo.com",
-    },
-    {
-      firstName: "Elena",
-      lastName: "Marin",
-      email: "elenamarin@hotmail.com",
-    },
-    {
-      firstName: "Alex",
-      lastName: "Andrei",
-      email: "alex.andrei@outlook.com",
-    },
-    {
-      firstName: "Maria",
-      lastName: "Georgescu",
-      email: "mariageorgescu@gmail.com",
-    },
-    {
-      firstName: "Victor",
-      lastName: "Dumitru",
-      email: "victordumitru@gmail.com",
-    },
-    {
-      firstName: "Raluca",
-      lastName: "Gheorghiu",
-      email: "ralucagheorghiu@icloud.com",
-    },
-    {
-      firstName: "Cristian",
-      lastName: "Stanescu",
-      email: "cristian.stanescu@live.com",
-    },
-    {
-      firstName: "Andreea",
-      lastName: "Munteanu",
-      email: "andreeamunteanu@gmail.com",
-    },
-  ]);
-
+  const [users, setUsers] = useState();
   const [selectedUser, setSelectedUser] = useState(null);
 
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const response = await getDocumentsInRealTime("users");
+      console.log(response);
+      setUsers(response);
+    };
+    fetchData();
+  }, []);
+
   const handleDeleteUser = (key) => {
-    const newUsers = users.filter((user) => user.email !== key);
-    setUsers(newUsers);
+    deleteUser("users", key);
     deleteUserModalDisclosure.onClose();
   };
 
@@ -82,8 +43,8 @@ export default function ExistingUsers() {
 
   const handleModalOpen = (user) => {
     setSelectedUser(user);
-    deleteUserModalDisclosure.onOpen();
     console.log(selectedUser);
+    deleteUserModalDisclosure.onOpen();
   };
 
   return (
@@ -110,10 +71,10 @@ export default function ExistingUsers() {
           <Tbody>
             {users &&
               users.map((user) => (
-                <Tr key={user.email}>
-                  <Td>{user.firstName}</Td>
-                  <Td>{user.lastName}</Td>
-                  <Td>{user.email}</Td>
+                <Tr key={user.id}>
+                  <Td>{user.user.firstName}</Td>
+                  <Td>{user.user.lastName}</Td>
+                  <Td>{user.user.email}</Td>
                   <Td>
                     <Button
                       onClick={() => handleModalOpen(user)}
@@ -141,7 +102,9 @@ export default function ExistingUsers() {
         }
         secondaryBtn={
           <Button
-            onClick={() => handleDeleteUser(selectedUser.email)}
+            onClick={() => {
+              handleDeleteUser(selectedUser.id);
+            }}
             colorScheme="red"
           >
             STERGE
@@ -150,7 +113,7 @@ export default function ExistingUsers() {
       >
         <Text>Esti pe cale sa stergi permanent utilizatorul:</Text>
         <Text color={"red"}>
-          {selectedUser?.firstName} {selectedUser?.lastName}
+          {selectedUser?.user?.firstName} {selectedUser?.user?.lastName}
         </Text>
       </MainModal>
     </Box>

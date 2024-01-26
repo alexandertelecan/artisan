@@ -178,8 +178,7 @@ export default function NewUser() {
               colorScheme="primary"
               type="submit"
               display="block"
-              // isDisabled={!isValid || !isDirty}
-              // onClick={}
+              isDisabled={!isValid || !isDirty}
             >
               Confirmă
             </Button>

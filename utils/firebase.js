@@ -71,15 +71,15 @@ const getDocumentsWithId = async (collectionName) => {
   }
 };
 
-const getDocumentsInRealTime = async (collectionName) => {
+const getDocumentsInRealTime = (collectionName) => {
   try {
     const data = [];
-    await onSnapshot(collection(db, collectionName), (snapshot) => {
+    onSnapshot(collection(db, collectionName), (snapshot) => {
       snapshot.docs.forEach((doc) => {
         data.push({ ...doc.data(), id: doc.id });
       });
+      console.log("real time data", data);
     });
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);
@@ -109,14 +109,15 @@ const resetPassword = async (email) => {
   }
 };
 
-const deleteUser = async (document, key) => {
+const deleteDocument = async (document, key) => {
   try {
     const docRef = doc(db, document, key);
     await deleteDoc(docRef);
     console.log(docRef);
-    // return true;
+    return true;
   } catch (error) {
     console.log(error);
+    return false;
   }
 };
 
@@ -126,6 +127,6 @@ export {
   createEmailAndPassUser,
   resetPassword,
   getDocumentsWithId,
-  deleteUser,
+  deleteDocument,
   getDocumentsInRealTime,
 };

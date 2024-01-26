@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Heading,
@@ -17,7 +17,7 @@ import {
 import MainModal from "../common/MainModal";
 import {
   getDocumentsWithId,
-  deleteUser,
+  deleteDocument,
   getDocumentsInRealTime,
 } from "../../../utils/firebase";
 
@@ -27,15 +27,19 @@ export default function ExistingUsers() {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const response = await getDocumentsInRealTime("users");
-      console.log(response);
+      const response = await getDocumentsWithId("users");
+      console.log("response is:", response);
       setUsers(response);
     };
     fetchData();
   }, []);
 
   const handleDeleteUser = (key) => {
-    deleteUser("users", key);
+    const response = deleteDocument("users", key);
+    if (response) {
+      const newUsers = users.filter((user) => user.id !== key);
+      setUsers(newUsers);
+    }
     deleteUserModalDisclosure.onClose();
   };
 
@@ -52,6 +56,7 @@ export default function ExistingUsers() {
       <Heading size="sm" color="primary.600">
         Utilizatori existenti
       </Heading>
+
       <TableContainer mt={"14px"} height={"600px"} overflowY={"scroll"}>
         <Table variant="simple">
           <Thead

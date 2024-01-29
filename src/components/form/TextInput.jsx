@@ -17,6 +17,7 @@ export default function TextInput({
   name,
   register,
   elementProps,
+  placeholder,
 }) {
   const [show, setShow] = React.useState(false);
   const togglePasswordVisibility = () => {
@@ -27,6 +28,7 @@ export default function TextInput({
       <FormLabel>{label}</FormLabel>
       <InputGroup>
         <Input
+          placeholder={placeholder}
           type={
             type === "password" && !show
               ? "password"

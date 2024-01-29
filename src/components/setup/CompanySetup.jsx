@@ -53,7 +53,6 @@ const companySchema = yup
   .required();
 
 export default function CompanySetup({ data, onCompanySubmit }) {
-  console.log("DATA IS: ", data);
   const {
     register,
     handleSubmit,
@@ -70,6 +69,7 @@ export default function CompanySetup({ data, onCompanySubmit }) {
     },
     mode: "onBlur",
   });
+
   return (
     <Box mt="48px">
       <Heading size="sm" color="primary.600">

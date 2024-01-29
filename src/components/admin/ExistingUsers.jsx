@@ -13,6 +13,7 @@ import {
   Button,
   useDisclosure,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import MainModal from "../common/MainModal";
 import {
@@ -28,7 +29,6 @@ export default function ExistingUsers() {
   React.useEffect(() => {
     const fetchData = async () => {
       const response = await getDocumentsWithId("users");
-      console.log("response is:", response);
       setUsers(response);
     };
     fetchData();
@@ -39,6 +39,7 @@ export default function ExistingUsers() {
     if (response) {
       const newUsers = users.filter((user) => user.id !== key);
       setUsers(newUsers);
+      showToast();
     }
     deleteUserModalDisclosure.onClose();
   };
@@ -47,8 +48,21 @@ export default function ExistingUsers() {
 
   const handleModalOpen = (user) => {
     setSelectedUser(user);
-    console.log(selectedUser);
     deleteUserModalDisclosure.onOpen();
+  };
+
+  const toast = useToast();
+
+  const showToast = () => {
+    toast({
+      title: "Utilizator sters",
+      description: "Ati sters utilizatorul cu succes!",
+      duration: 5000,
+      isClosable: true,
+      status: "success",
+      position: "top",
+      colorScheme: "red",
+    });
   };
 
   return (
@@ -57,7 +71,7 @@ export default function ExistingUsers() {
         Utilizatori existenti
       </Heading>
 
-      <TableContainer mt={"14px"} height={"600px"} overflowY={"scroll"}>
+      <TableContainer mt={"24px"} height={"600px"} overflowY={"scroll"}>
         <Table variant="simple">
           <Thead
             position={"sticky"}

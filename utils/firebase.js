@@ -14,6 +14,7 @@ import {
   doc,
   deleteDoc,
   onSnapshot,
+  updateDoc,
 } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -121,6 +122,18 @@ const deleteDocument = async (document, key) => {
   }
 };
 
+const updateDocument = async (document, id, update) => {
+  try {
+    const docRef = doc(db, document, id);
+    await updateDoc(docRef, update);
+    console.log(docRef);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export {
   addDocument,
   getDocuments,
@@ -129,4 +142,5 @@ export {
   getDocumentsWithId,
   deleteDocument,
   getDocumentsInRealTime,
+  updateDocument,
 };

@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import NewUser from "../components/admin/NewUser";
 import ExistingUsers from "../components/admin/ExistingUsers";
+import CompanyDetails from "../components/admin/CompanyDetails";
 
 export default function AdminPanel() {
   return (
@@ -26,7 +27,7 @@ export default function AdminPanel() {
           <Box>
             <Heading size="md">Panoul de Administrare</Heading>
             <Text fontSize="md" color="gray">
-              Gestonare utilizatori
+              Gestonare a bazei de date
             </Text>
           </Box>
           <Box mt={{ base: "12px", md: "24px", xl: "48px" }}>
@@ -34,6 +35,7 @@ export default function AdminPanel() {
               <TabList>
                 <Tab>Utilizatori</Tab>
                 <Tab>Adauga</Tab>
+                <Tab>Date</Tab>
               </TabList>
 
               <TabPanels>
@@ -42,6 +44,9 @@ export default function AdminPanel() {
                 </TabPanel>
                 <TabPanel>
                   <NewUser />
+                </TabPanel>
+                <TabPanel>
+                  <CompanyDetails />
                 </TabPanel>
               </TabPanels>
             </Tabs>

@@ -18,7 +18,7 @@ export default function Setup() {
     const fetchData = async () => {
       const response = await getDocuments("company");
       if (response.length > 0) {
-        setStep(3); //Exista deja o companie, ruteaza la pagina principala /
+        setStep(3);
       }
     };
     fetchData();
@@ -65,6 +65,7 @@ export default function Setup() {
     if (response && authResponse) {
       setStep(3);
     }
+    console.log(values);
   };
 
   const returnToStep = (step) => {

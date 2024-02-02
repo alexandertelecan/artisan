@@ -29,6 +29,7 @@ export default function ExistingUsers() {
   React.useEffect(() => {
     const fetchData = async () => {
       const response = await getDocumentsWithId("users");
+      console.log("users:", users);
       setUsers(response);
     };
     fetchData();

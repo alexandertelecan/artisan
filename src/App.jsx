@@ -4,11 +4,13 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import Dashboard from "./pages/Dashboard";
 import Auth from "./Auth";
+import RootLayout from "./components/layout/RootLayout";
+import Dashboard from "./pages/Dashboard";
 import Setup from "./pages/Setup";
 import AdminPanel from "./pages/AdminPanel";
-import RootLayout from "./components/layout/RootLayout";
+import Stock from "./pages/Stock";
+
 import NotFound from "./pages/NotFound";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -17,6 +19,7 @@ const router = createBrowserRouter(
       <Route path="auth" element={<Auth />} />
       <Route path="setup" element={<Setup />} />
       <Route path="admin" element={<AdminPanel />} />
+      <Route path="stock" element={<Stock />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

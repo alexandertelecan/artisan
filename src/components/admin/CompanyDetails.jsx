@@ -85,6 +85,7 @@ export default function CompanyDetails() {
     resolver: yupResolver(adminCompanySchema),
     mode: "onBlur",
   });
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await getDocumentsWithId("company");

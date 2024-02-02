@@ -26,7 +26,7 @@ export default function MainModal({
         <ModalHeader>{title}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>{children}</ModalBody>
-        <ModalFooter>
+        <ModalFooter display={"flex"} justifyContent={"space-between"}>
           {primaryBtn && primaryBtn}
           {secondaryBtn && secondaryBtn}
         </ModalFooter>

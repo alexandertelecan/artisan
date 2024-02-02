@@ -79,7 +79,7 @@ const getDocumentsInRealTime = (collectionName) => {
       snapshot.docs.forEach((doc) => {
         data.push({ ...doc.data(), id: doc.id });
       });
-      console.log("real time data", data);
+      console.log("real time doc", data);
     });
     return data;
   } catch (error) {

@@ -1,6 +1,5 @@
 import { Box, Heading, Text, Flex, Button } from "@chakra-ui/react";
 import TextInput from "../form/TextInput";
-
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";

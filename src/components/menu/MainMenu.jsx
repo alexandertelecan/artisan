@@ -21,6 +21,7 @@ import {
   MdOutlineSettings,
   MdLock,
   MdAdminPanelSettings,
+  MdContentPaste,
 } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
@@ -115,6 +116,22 @@ export default function MainMenu() {
                     marginRight={"6px"}
                   />
                   <NavLink to={"/admin"}>Admin</NavLink>
+                </Button>
+              </ListItem>
+              <ListItem
+                display={"flex"}
+                alignItems={"center"}
+                _hover={{ color: "primary.600" }}
+              >
+                <Button
+                  color={"black"}
+                  onClick={onClose}
+                  variant={"link"}
+                  _hover={{ color: "primary.600" }}
+                  size={"lg"}
+                >
+                  <Icon as={MdContentPaste} boxSize={5} marginRight={"6px"} />
+                  <NavLink to={"/stock"}>Stock</NavLink>
                 </Button>
               </ListItem>
             </List>

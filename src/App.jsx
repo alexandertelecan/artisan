@@ -10,7 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import Setup from "./pages/Setup";
 import AdminPanel from "./pages/AdminPanel";
 import Stock from "./pages/Stock";
-
+import Invoices from "./pages/Invoices";
 import NotFound from "./pages/NotFound";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +20,7 @@ const router = createBrowserRouter(
       <Route path="setup" element={<Setup />} />
       <Route path="admin" element={<AdminPanel />} />
       <Route path="stock" element={<Stock />} />
+      <Route path="invoices" element={<Invoices />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

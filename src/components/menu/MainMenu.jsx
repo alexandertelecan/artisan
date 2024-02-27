@@ -22,6 +22,7 @@ import {
   MdLock,
   MdAdminPanelSettings,
   MdContentPaste,
+  MdAttachMoney,
 } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
@@ -132,6 +133,22 @@ export default function MainMenu() {
                 >
                   <Icon as={MdContentPaste} boxSize={5} marginRight={"6px"} />
                   <NavLink to={"/stock"}>Stock</NavLink>
+                </Button>
+              </ListItem>
+              <ListItem
+                display={"flex"}
+                alignItems={"center"}
+                _hover={{ color: "primary.600" }}
+              >
+                <Button
+                  color={"black"}
+                  onClick={onClose}
+                  variant={"link"}
+                  _hover={{ color: "primary.600" }}
+                  size={"lg"}
+                >
+                  <Icon as={MdAttachMoney} boxSize={5} marginRight={"6px"} />
+                  <NavLink to={"/invoices"}>Facturi</NavLink>
                 </Button>
               </ListItem>
             </List>

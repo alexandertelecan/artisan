@@ -29,7 +29,7 @@ const newStockSchema = yup
         "Pretul introdus este invalid. Te rugăm să reintroduci un pret corect."
       )
       .matches(
-        regex.price,
+        regex.numbers,
         "Pretul introdus este invalid. Te rugăm să reintroduci un pret corect."
       ),
   })

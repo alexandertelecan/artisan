@@ -5,6 +5,9 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  signOut,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -134,6 +137,38 @@ const updateDocument = async (document, id, update) => {
   }
 };
 
+const signInUser = async (email, pass) => {
+  try {
+    signInWithEmailAndPassword(auth, email, pass).then((cred) => {
+      console.log("user signed in", cred.user);
+    });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+const signOutUser = async () => {
+  try {
+    signOut(auth);
+    console.log("user signed out");
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+const stateOfUser = async () => {
+  try {
+    onAuthStateChanged(auth, (user) => {
+      console.log("user state changed:", user);
+    });
+  } catch {}
+};
+stateOfUser();
+
 export {
   addDocument,
   getDocuments,
@@ -143,4 +178,6 @@ export {
   deleteDocument,
   getDocumentsInRealTime,
   updateDocument,
+  signInUser,
+  signOutUser,
 };

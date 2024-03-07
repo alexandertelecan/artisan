@@ -13,46 +13,45 @@ import {
 import NewUser from "../components/admin/NewUser";
 import ExistingUsers from "../components/admin/ExistingUsers";
 import CompanyDetails from "../components/admin/CompanyDetails";
+import MainMenu from "../components/menu/MainMenu";
 
 export default function AdminPanel() {
   return (
-    <Flex
-      w={{ base: "auto", md: "calc(100dvw - 32px)" }}
-      h={{ base: "auto", md: "calc(100dvh - 32px)" }}
-      alignItems="center"
-      justifyContent="center"
-    >
-      <Box border="1px solid lightgrey" borderRadius="8px" maxW={"100%"}>
-        <Box padding="16px">
-          <Box>
-            <Heading size="md">Panoul de Administrare</Heading>
-            <Text fontSize="md" color="gray">
-              Gestonare a bazei de date
-            </Text>
-          </Box>
-          <Box mt={{ base: "12px", md: "24px", xl: "48px" }}>
-            <Tabs>
-              <TabList>
-                <Tab>Utilizatori</Tab>
-                <Tab>Adauga</Tab>
-                <Tab>Date</Tab>
-              </TabList>
+    <Box position={"fixed"} left={"20dvw"} width={"80dvw"} height={"100dvh"}>
+      <MainMenu />
+      <Flex alignItems="center" justifyContent="center">
+        <Box width={"100%"} height={"100vh"}>
+          <Box padding="16px">
+            <Box paddingLeft={"16px"}>
+              <Heading size="md">Panoul de Administrare</Heading>
+              <Text fontSize="md" color="gray">
+                Gestonare a bazei de date
+              </Text>
+            </Box>
+            <Box marginTop={"12px"}>
+              <Tabs>
+                <TabList>
+                  <Tab>Utilizatori</Tab>
+                  <Tab>Adauga utilizator</Tab>
+                  <Tab>Date Companie</Tab>
+                </TabList>
 
-              <TabPanels>
-                <TabPanel>
-                  <ExistingUsers />
-                </TabPanel>
-                <TabPanel>
-                  <NewUser />
-                </TabPanel>
-                <TabPanel>
-                  <CompanyDetails />
-                </TabPanel>
-              </TabPanels>
-            </Tabs>
+                <TabPanels>
+                  <TabPanel>
+                    <ExistingUsers />
+                  </TabPanel>
+                  <TabPanel>
+                    <NewUser />
+                  </TabPanel>
+                  <TabPanel>
+                    <CompanyDetails />
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
+            </Box>
           </Box>
         </Box>
-      </Box>
-    </Flex>
+      </Flex>
+    </Box>
   );
 }

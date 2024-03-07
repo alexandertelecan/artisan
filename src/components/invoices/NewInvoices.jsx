@@ -230,7 +230,7 @@ export default function NewInvoices() {
   };
 
   return (
-    <Box height={"100%"}>
+    <Box height={"75dvh"} overflowY={"scroll"}>
       <Heading size="sm" color="primary.600">
         Adauga o noua factura
       </Heading>
@@ -332,74 +332,88 @@ export default function NewInvoices() {
           <Flex
             gap={5}
             width="100%"
-            marginTop={"20px"}
-            flexDirection={"column"}
+            flexDirection={"row"}
+            alignItems={"center"}
           >
             <Box>
               {fields.map((item, index) => (
                 <Box key={item.id} marginBottom={"8px"}>
-                  <Box>
-                    <Text marginBottom={"4px"}>Produs</Text>
-                    <Controller
-                      control={control}
-                      name={`invoice.${index}.product`}
-                      render={({ field: { onChange, onBlur, value } }) => (
-                        <Select
-                          placeholder={"Selecteaza un produs"}
-                          marginBottom={"24px"}
-                          onChange={onChange}
-                          onBlur={onBlur}
-                          selected={value}
-                        >
-                          {stocks &&
-                            stocks.map((stock) => {
-                              return (
-                                <option
-                                  key={stock.id}
-                                  value={`${stock.stock.productName} ${stock.stock.price}`}
-                                >
-                                  {`Produs: ${stock.stock.productName} / Unitate: ${stock.stock.unit} / Pret: ${stock.stock.price} lei`}
-                                </option>
-                              );
-                            })}
-                        </Select>
-                      )}
-                    />
-                    <QuantityInput
-                      name={`invoice.${index}.quantity`}
-                      register={register}
-                      label="Cantitate"
-                      error={errors["quantity"]}
-                      helperText={
-                        "Pret subtotal: " +
-                        subtotal[`invoice.${index}.subtotalPrice`]
-                      }
-                      elementProps={{ marginBottom: "24px" }}
-                      onChange={(e) => handleQuantityOnchange(e, index)}
-                    />
+                  <Box marginTop={"32px"}>
+                    <Flex alignItems={"center"} gap={5}>
+                      <Box>
+                        <Text marginBottom={"2px"}>Produs</Text>
+                        <Controller
+                          control={control}
+                          name={`invoice.${index}.product`}
+                          render={({ field: { onChange, onBlur, value } }) => (
+                            <Select
+                              placeholder={"Selecteaza un produs"}
+                              marginBottom={"24px"}
+                              onChange={onChange}
+                              onBlur={onBlur}
+                              selected={value}
+                            >
+                              {stocks &&
+                                stocks.map((stock) => {
+                                  return (
+                                    <option
+                                      key={stock.id}
+                                      value={`${stock.stock.productName} ${stock.stock.price}`}
+                                    >
+                                      {`Produs: ${stock.stock.productName} / Unitate: ${stock.stock.unit} / Pret: ${stock.stock.price} lei`}
+                                    </option>
+                                  );
+                                })}
+                            </Select>
+                          )}
+                        />
+                      </Box>
+
+                      <Box>
+                        <QuantityInput
+                          name={`invoice.${index}.quantity`}
+                          register={register}
+                          label="Cantitate"
+                          error={errors["quantity"]}
+                          // helperText={
+                          //   "Pret subtotal: " +
+                          //   subtotal[`invoice.${index}.subtotalPrice`]
+                          // }
+                          elementProps={{ marginBottom: "24px" }}
+                          onChange={(e) => handleQuantityOnchange(e, index)}
+                        />
+                      </Box>
+
+                      <Button
+                        colorScheme="red"
+                        type="Button"
+                        onClick={() => remove(index)}
+                      >
+                        Sterge
+                      </Button>
+                      <Button
+                        colorScheme="primary"
+                        type="Button"
+                        onClick={() => append({ product: "", quantity: "" })}
+                      >
+                        Adauga alt produs
+                      </Button>
+                    </Flex>
+                    <Text marginTop={"-8px"} color={"grey"}>
+                      {"Pret subtotal: " +
+                        subtotal[`invoice.${index}.subtotalPrice`]}
+                    </Text>
                   </Box>
-                  <Button
-                    colorScheme="red"
-                    type="Button"
-                    onClick={() => remove(index)}
-                  >
-                    Sterge
-                  </Button>
                 </Box>
               ))}
             </Box>
-            <Button
-              type="Button"
-              onClick={() => append({ product: "", quantity: "" })}
-            >
-              Adauga alt produs
-            </Button>
           </Flex>
-          <Flex mt="24px" justifyContent="space-between">
+          <Flex mt="24px" flexDirection={"column"}>
             <Text fontWeight={"bold"} fontSize={"large"}>
               Total: {total} lei
             </Text>
             <Button
+              marginTop={"12px"}
               colorScheme="primary"
               type="submit"
               display="block"

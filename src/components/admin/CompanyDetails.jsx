@@ -150,7 +150,7 @@ export default function CompanyDetails() {
 
   if (data) {
     return (
-      <Box height={"100%"} width={"800px"}>
+      <Box height={"100%"}>
         <Heading size="sm" color="primary.600">
           Datele Administratorului
         </Heading>

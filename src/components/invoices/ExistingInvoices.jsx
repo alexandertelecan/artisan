@@ -43,7 +43,7 @@ export default function ExistingInvoices() {
         Stoc existent
       </Heading>
 
-      <TableContainer mt={"24px"} height={"600px"} overflowY={"scroll"}>
+      <TableContainer mt={"24px"} height={"75dvh"} overflowY={"scroll"}>
         <Table variant="simple">
           <Thead
             position={"sticky"}
@@ -55,7 +55,7 @@ export default function ExistingInvoices() {
             <Tr>
               <Th>Client</Th>
               <Th>Data</Th>
-              <Th>Pret</Th>
+              <Th>Total</Th>
               <Th>Actiune</Th>
             </Tr>
           </Thead>

@@ -1,9 +1,11 @@
-import { Box, Heading, Text, Flex, Button } from "@chakra-ui/react";
+import { Box, Heading, Text, Flex, Button, useToast } from "@chakra-ui/react";
 import TextInput from "../form/TextInput";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import regex from "../../../utils/regex";
+import { NavLink, useNavigate } from "react-router-dom";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 const loginSchema = yup
   .object({
     email: yup
@@ -28,7 +30,9 @@ const loginSchema = yup
   })
   .required();
 
-function LoginForm({ navStep }) {
+export default function LoginForm({ navStep }) {
+  const navigate = useNavigate();
+  const auth = getAuth();
   const {
     register,
     handleSubmit,
@@ -37,6 +41,32 @@ function LoginForm({ navStep }) {
     resolver: yupResolver(loginSchema),
     mode: "onBlur",
   });
+
+  const onSubmit = async (values) => {
+    const email = values.email.trim();
+    const password = values.password.trim();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((user) => {
+        console.log(user);
+        navigate("/admin");
+      })
+      .catch((error) => {
+        console.log(error);
+        showToast();
+      });
+  };
+
+  const toast = useToast();
+  const showToast = () => {
+    toast({
+      title: "Date incorecte",
+      description: "Adresa de email sau parola introdusa incorect!",
+      duration: 5000,
+      isClosable: true,
+      status: "error",
+      position: "top",
+    });
+  };
 
   return (
     <Flex
@@ -55,7 +85,7 @@ function LoginForm({ navStep }) {
         <Text color="gray" marginBottom="32px">
           Autentificați-vă pentru accesul în contul organizației.
         </Text>
-        <form onSubmit={handleSubmit((data) => console.log(data))} noValidate>
+        <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <TextInput
             label="Email"
             type="email"
@@ -71,6 +101,7 @@ function LoginForm({ navStep }) {
             error={errors["password"]}
             name="password"
             register={register}
+            helperText="Introduceți parola asociată contului dvs. (ex: Parola1234)"
           />
           <Button
             type="submit"
@@ -81,19 +112,32 @@ function LoginForm({ navStep }) {
             Submit
           </Button>
 
-          <Text
-            textAlign="center"
-            color="primary.600"
-            cursor="pointer"
-            _hover={{ textDecoration: "underline" }}
-            onClick={() => navStep(2)}
+          <Flex
+            justifyContent={"space-evenly"}
+            alignItems={"center"}
+            marginTop={"12px"}
           >
-            Resetează parola
-          </Text>
+            <Text
+              textAlign="center"
+              color="primary.600"
+              cursor="pointer"
+              _hover={{ textDecoration: "underline" }}
+              onClick={() => navStep(2)}
+            >
+              Resetează parola
+            </Text>
+
+            <Text
+              textAlign="center"
+              color="primary.600"
+              cursor="pointer"
+              _hover={{ textDecoration: "underline" }}
+            >
+              <NavLink to={"/setup"}>Inregistrare</NavLink>
+            </Text>
+          </Flex>
         </form>
       </Box>
     </Flex>
   );
 }
-
-export default LoginForm;
